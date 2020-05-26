@@ -1,0 +1,94 @@
+#IMPORTY
+import pygame
+import random
+
+
+# #ROSLINY:
+class Plant():
+    #licznik zbiorowy WSZYSTKICH roslin
+    Plant_counter = 0
+
+    def __init__(self):
+        Plant.Plant_counter += 1 #przy aktywacji dodaje 1
+        Plant.energy = 1
+
+    def existing(self):
+    #Funkcja ma ustalać czy roślina jest zdolna do życia na podstawie poziomu energii
+        if self.energy > 0:
+            print("Roślina żyje")
+        else:
+            print("Roślina nie żyje")
+
+class SuperPlant(Plant):
+    SuperPlant_counter = 0
+         #licznik TYLKO SuperRoślin
+
+    def __init__(self):
+        super().__init__()        #Korzystamy z def z Plant
+        SuperPlant.SuperPlant_counter += 1
+        SuperPlant.energy = 35
+        self.image = pygame.Surface((10,10))
+        self.image.fill((255,255,255))
+        # screen.blit (SuperPlant, (random.randint(5,790), (random.randint(5,590))))
+        self.rect = self.image.get_rect()
+        self.rect.x = random.randint(0,775)
+        self.rect.y = random.randint(0,575)
+
+class NormalPlant(Plant):
+    NormalPlant_counter = 0     #licznik TYLKO NormalnychRoślin
+
+    def __init__(self):
+        NormalPlant.NormalPlant_counter += 1
+        super().__init__()       #Korzystamy z def z Plant
+        NormalPlant.energy = 10
+        self.image = pygame.Surface((10,10))
+        self.image.fill((255,50,0))
+        # screen.blit (SuperPlant, (random.randint(5,790), (random.randint(5,590))))
+        self.rect = self.image.get_rect()
+        self.rect.x = random.randint(0,775)
+        self.rect.y = random.randint(0,575)
+
+class BadPlant(Plant):
+    BadPlant_counter = 0    #licznik TYLKO ZłychRoślin
+
+    def __init__(self):
+        BadPlant.BadPlant_counter += 1
+        super().__init__()      #Korzystamy z def z Plant
+        BadPlant.energy = 5
+        self.image = pygame.Surface((10,10))
+        self.image.fill((150,40,255))
+        # screen.blit (SuperPlant, (random.randint(5,790), (random.randint(5,590))))
+        self.rect = self.image.get_rect()
+        self.rect.x = random.randint(0,775)
+        self.rect.y = random.randint(0,575)
+
+class KillingPlant(Plant):
+    KillingPlant_counter = 0    #licznik TYLKO morderczych roślin
+
+    def __init__(self):
+        KillingPlant.KillingPlant_counter += 1
+        super().__init__()
+        KillingPlant.energy = 1
+        self.image = pygame.Surface((10,10))
+        self.image.fill((150,40,70))
+        # screen.blit (SuperPlant, (random.randint(5,790), (random.randint(5,590))))
+        self.rect = self.image.get_rect()
+        self.rect.x = random.randint(0,775)
+        self.rect.y = random.randint(0,575)
+
+#PRZYKŁADOWE ROŚLINY
+SuperPlant = SuperPlant()
+NormalPlant = NormalPlant()
+BadPlant = BadPlant()
+KillingPlant = KillingPlant()
+
+#to po prostu żeby można było potem przekleić do gameloopa (jeszcze nie jestem pewna jak) 
+    #RYSOWANKO ROŚLIN
+    screen.blit(SuperPlant.image, SuperPlant.rect)
+    screen.blit(NormalPlant.image, NormalPlant.rect)
+    screen.blit(BadPlant.image, BadPlant.rect)
+    screen.blit(KillingPlant.image, KillingPlant.rect)
+
+
+
+
