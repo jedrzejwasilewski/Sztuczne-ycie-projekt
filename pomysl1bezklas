@@ -1,0 +1,132 @@
+import pygame
+import random
+import math
+pygame.init()
+
+#ekran, szerokosc i wysokosc
+screen=pygame.display.set_mode((800, 600))
+
+#tytul i ikonka
+pygame.display.set_caption("Sztuczne życko")
+icon=pygame.image.load("C:/Users/Jędrzej/Desktop/projket progi/ikonka.png")
+pygame.display.set_icon(icon)
+
+#zwierzak, puste listy konieczne do późniejszej pętli i liczba zwierzaków
+animalImg=[]
+animalX=[]
+animalY=[]
+animalX_change=[]
+animalY_change=[]
+bonus=[]
+energia=[]
+numanimals=13
+time=0
+days=1
+
+#pętla wyświetlająca poruszające się zwierzaki
+#playerX odpowiada za początkowe rozmieszczenie zwierzaka
+#playerX_change odpowiada za poruszanie się, wartość w nawiasie to prędkość
+#bonus oznacza wartość o którą zwiększana jest prędkość po kolizji z roślina
+for i in range (numanimals):
+    animalImg.append(pygame.image.load("C:/Users/Jędrzej/Desktop/projket progi/malpka.png"))
+    animalX.append(370+i*random.randint(-20,20))
+    animalY.append(50+i*random.randint(-20,20))
+    animalX_change.append(0.3)
+    animalY_change.append(0.3)
+    energia.append(0)
+    bonus.append(0.1)
+
+
+
+#roślina, puste listy konieczne do póżniejszej pętli i liczba roślin
+plantImg=[]
+plantX=[]
+plantY=[]
+numplants=26
+
+#petla rozrzucająca rośliny losowo po mapie
+for i in range(numplants):
+    plantImg.append(pygame.image.load("C:/Users/Jędrzej/Desktop/projket progi/banan.png"))
+    plantX.append(random.randint(0,800))
+    plantY.append(random.randint(0,600))
+
+#czesc odpowiedzialna za czcionke, jej wygląd i lokalizacje na ekranie
+font=pygame.font.Font("freesansbold.ttf",32)
+textX=10
+textY=10
+
+#funkcja ktora pokazuje ile dni upłyneło
+def show_time(x, y):
+    dzien=font.render("Dzień:"+str(days),True,(255,255,255))
+    screen.blit(dzien,(x,y))
+
+#funkcja wyświetlająca obrazek zwierzęcia
+def animal(x,y,i):
+    screen.blit(animalImg[i],(x,y))
+
+#funckja wyświetlająca obrazek rośliny
+def plant(x,y,i):
+    screen.blit(plantImg[i],(x,y))
+
+#funkcja odpowiadająca za wykrycie kolizji miedzy zwierzęciem a roślina
+def iscol(animalX,animalY,plantX,plantY):
+    distance=math.sqrt((math.pow(animalX-plantX,2))+(math.pow(animalY-plantY,2)))
+    if distance<27:
+        return True
+    else:
+        return False
+
+#Gierca zawsze dziala (gameloop)
+running=True
+while running:
+    for event in pygame.event.get():
+        if event.type==pygame.QUIT:
+            running=False
+    time+=1
+    if time%500==0:
+        days+=1
+#wyświetlanie koloru tła
+    screen.fill((0,128,0))
+
+#odmierzanie energii zwierzecia
+    for i in range(numanimals):
+        energia[i]+=0.001
+#jeśli energia przekroczy dany poziom to zwierzak ląduje poza mapą (x=1000,y=0)
+        if energia[i]>=5:
+            animalX[i]=1000
+            animalY[i]=0
+        else:
+            animalX[i]+=animalX_change[i]
+            animalY[i]+=animalY_change[i]
+#zmienna wylosowana jest po to zeby po odbiciu od swiany przesuwały się w daną strone o ileś pikseli
+            wylosowana=random.randint(-50,50)
+#tutaj jest opisane co ma się dziać ze zwierzakiem po dotarciu do granicy mapy
+#maja utrzymywać prędkość jakąs miały wcześniej i zmieniać kierunek ruchu
+            if animalX[i]<=0:
+                animalX_change[i]=0.3+bonus[i]
+                animalY[i]+=wylosowana
+            elif animalX[i]>=736:
+                animalX_change[i]=-0.3-bonus[i]
+                animalY[i]+=wylosowana
+            elif animalY[i]<=0:
+                animalY_change[i]=0.3
+            elif animalY[i]>=536:
+                animalY_change[i]=-0.3
+            animal(animalX[i],animalY[i],i)
+
+#ta czesc kodu odpowiada za to by po kolizji banan "znikał", czyli lądował poza mapę
+#zwierzak po kolizji zyskuje prędkość
+    for j in range(numanimals):
+        for i in range(numplants):
+            collision=iscol(animalX[j],animalY[j],plantX[i],plantY[i])
+            if collision:
+                plantX[i]=900
+                plantY[i]=0
+                animalX_change[j]+=0.1
+                bonus[j]+=0.1
+                energia[j]-=1
+            plant(plantX[i],plantY[i],i)
+
+
+    show_time(textX,textY)
+    pygame.display.update()
