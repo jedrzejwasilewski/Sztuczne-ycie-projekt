@@ -1,7 +1,7 @@
 #IMPORTY
 import pygame
 import random
-
+import os
 
 # #ROSLINY:
 class Plant():
@@ -27,9 +27,10 @@ class SuperPlant(Plant):
         super().__init__()        #Korzystamy z def z Plant
         SuperPlant.SuperPlant_counter += 1
         SuperPlant.energy = 35
-        self.image = pygame.Surface((10,10))
-        self.image.fill((255,255,255))
-        # screen.blit (SuperPlant, (random.randint(5,790), (random.randint(5,590))))
+        self.image = pygame.image.load(os.path.join(WSTAW ŚCIEŻKĘ, "WSTAW NAZWE JPG")).convert() 
+        self.image.set_colorkey(BLACK) #wybieramy co ma byc transparentne
+        self.rect = self.image.get_rect()
+     
         self.rect = self.image.get_rect()
         self.rect.x = random.randint(0,775)
         self.rect.y = random.randint(0,575)
@@ -41,9 +42,9 @@ class NormalPlant(Plant):
         NormalPlant.NormalPlant_counter += 1
         super().__init__()       #Korzystamy z def z Plant
         NormalPlant.energy = 10
-        self.image = pygame.Surface((10,10))
-        self.image.fill((255,50,0))
-        # screen.blit (SuperPlant, (random.randint(5,790), (random.randint(5,590))))
+         self.image = pygame.image.load(os.path.join(WSTAW ŚCIEŻKĘ, "WSTAW NAZWE JPG")).convert() 
+        self.image.set_colorkey(BLACK) #wybieramy co ma byc transparentne
+        self.rect = self.image.get_rect()
         self.rect = self.image.get_rect()
         self.rect.x = random.randint(0,775)
         self.rect.y = random.randint(0,575)
@@ -55,10 +56,10 @@ class BadPlant(Plant):
         BadPlant.BadPlant_counter += 1
         super().__init__()      #Korzystamy z def z Plant
         BadPlant.energy = 5
-        self.image = pygame.Surface((10,10))
-        self.image.fill((150,40,255))
-        # screen.blit (SuperPlant, (random.randint(5,790), (random.randint(5,590))))
+        self.image = pygame.image.load(os.path.join(WSTAW ŚCIEŻKĘ, "WSTAW NAZWE JPG")).convert() 
+        self.image.set_colorkey(BLACK) #wybieramy co ma byc transparentne
         self.rect = self.image.get_rect()
+
         self.rect.x = random.randint(0,775)
         self.rect.y = random.randint(0,575)
 
@@ -69,10 +70,10 @@ class KillingPlant(Plant):
         KillingPlant.KillingPlant_counter += 1
         super().__init__()
         KillingPlant.energy = 1
-        self.image = pygame.Surface((10,10))
-        self.image.fill((150,40,70))
-        # screen.blit (SuperPlant, (random.randint(5,790), (random.randint(5,590))))
+        self.image = pygame.image.load(os.path.join(WSTAW ŚCIEŻKĘ, "WSTAW NAZWE JPG")).convert() 
+        self.image.set_colorkey(BLACK) #wybieramy co ma byc transparentne
         self.rect = self.image.get_rect()
+
         self.rect.x = random.randint(0,775)
         self.rect.y = random.randint(0,575)
 
@@ -82,12 +83,7 @@ NormalPlant = NormalPlant()
 BadPlant = BadPlant()
 KillingPlant = KillingPlant()
 
-#to po prostu żeby można było potem przekleić do gameloopa (jeszcze nie jestem pewna jak) 
-    #RYSOWANKO ROŚLIN
-    screen.blit(SuperPlant.image, SuperPlant.rect)
-    screen.blit(NormalPlant.image, NormalPlant.rect)
-    screen.blit(BadPlant.image, BadPlant.rect)
-    screen.blit(KillingPlant.image, KillingPlant.rect)
+  
 
 
 
