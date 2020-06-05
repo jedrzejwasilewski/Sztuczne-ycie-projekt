@@ -8,11 +8,9 @@ window=white #tło jest białe
 
 #klasa zwierząt
 class Animal(pygame.sprite.Sprite):
-    def __init__(self,x,y,width,height,color=black,radius=5,speed=[0,0]):
+    def __init__(self,x,y,width,height,speed=[0,0]):
         super().__init__()
-        self.image=pygame.Surface([radius*2,radius*2])
-        self.image.fill(window) #"tło" zwierzaka jest transparentne
-        pygame.draw.circle(self.image,color,(radius,radius),radius) #na razie zwierze jest kropka, trzeba zaimportowac obrazek
+        self.image=pygame.image.load("malpka.png")
         self.rect=self.image.get_rect()
         self.pos=np.array([x,y],dtype=np.float64)
         self.speed=np.asarray(speed, dtype=np.float64)
@@ -51,7 +49,7 @@ for i in range(20):  #tu się pojawia 20 zwierzaków
     x=np.random.randint(0,width+1)
     y=np.random.randint(0,height+1)
     speed=np.random.randint(2)*2-1
-    anim=Animal(x,y,width,height,color=red,speed=speed) #tu też trzeba zmienić na obrazek
+    anim=Animal(x,y,width,height,speed=speed) #tu też trzeba zmienić na obrazek
     numanimals.add(anim)
     
 #tak samo, jak wyżej, wstawione po to, żeby jakoś działało
