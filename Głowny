@@ -64,10 +64,10 @@ def show_time(x, y):
 def animal(x,y,i):
     screen.blit(animalImg[i],(x,y))
 
-#funckja wyświetlająca obrazek rośliny ###DO SPRAWDZENIA!! (+ TRZEBA UZUPEŁNIĆ DANE W KLASIE + TRZEBA PRZEROBIĆ LISTY NA OBIEKTY ŻEBY IMPORTY DZIAŁAŁY###
+#funckja wyświetlająca obrazek rośliny
 def plant(x,y,i):
     #screen.blit(plantImg[i],(x,y))
-      #RYSOWANKO ROŚLIN
+
     screen.blit(SuperPlant.image, SuperPlant.rect)
     screen.blit(NormalPlant.image, NormalPlant.rect)
     screen.blit(BadPlant.image, BadPlant.rect)
