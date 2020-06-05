@@ -3,7 +3,7 @@ import pygame
 import random
 import os
 
-# #ROSLINY:
+ #ROSLINY:
 class Plant():
     #licznik zbiorowy WSZYSTKICH roslin
     Plant_counter = 0
@@ -82,6 +82,31 @@ SuperPlant = SuperPlant()
 NormalPlant = NormalPlant()
 BadPlant = BadPlant()
 KillingPlant = KillingPlant()
+
+#OKNO:
+pygame.init()
+screen=pygame.display.set_mode((800, 600))
+pygame.display.set_caption("Sztuczne życie")
+
+#PRZEBIEG SYMULACJI:
+
+running=True
+while running:
+    for event in pygame.event.get():
+        if event.type==pygame.QUIT:
+            running=False
+    screen.fill((0,128,0))
+    
+    #RYSOWANIE:
+    screen.blit(SuperPlant.image, SuperPlant.rect)
+    screen.blit(NormalPlant.image, NormalPlant.rect)
+    screen.blit(BadPlant.image, BadPlant.rect)
+    screen.blit(KillingPlant.image, KillingPlant.rect)
+   
+   pygame.display.update()
+
+quit()
+ 
 
   
 
