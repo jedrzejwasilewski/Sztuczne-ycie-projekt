@@ -43,12 +43,14 @@ plantImg=[]
 plantX=[]
 plantY=[]
 numplants=26
+plantenergy=[]
 
 #petla rozrzucająca rośliny losowo po mapie
 for i in range(numplants):
     plantImg.append(pygame.image.load("C:/Users/Jędrzej/Desktop/projket progi/banan.png"))
     plantX.append(random.randint(0,800))
     plantY.append(random.randint(0,600))
+    plantenergy.append(0)
 
 #czesc odpowiedzialna za czcionke, jej wygląd i lokalizacje na ekranie
 font=pygame.font.Font("freesansbold.ttf",32)
@@ -127,6 +129,15 @@ while running:
                 energia[j]-=1
             plant(plantX[i],plantY[i],i)
 
+#pojawianie się bananów w trakcie gry
+    for i in range(numplants):
+        plantenergy[i]+=1
+        if plantenergy[i]==5000:
+            plantX[i]=random.randint(0,800)
+            plantY[i]=random.randint(0,600)
+            plantenergy[i]=0            
+
 
     show_time(textX,textY)
     pygame.display.update()
+
