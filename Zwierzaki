@@ -1,0 +1,70 @@
+import pygame,sys
+import numpy as np
+#kolory
+white=(255,255,255)
+black=(0,0,0)
+red=(255,0,0)
+window=white #tło jest białe
+
+#klasa zwierząt
+class Animal(pygame.sprite.Sprite):
+    def __init__(self,x,y,width,height,color=black,radius=5,speed=[0,0]):
+        super().__init__()
+        self.image=pygame.Surface([radius*2,radius*2])
+        self.image.fill(window) #"tło" zwierzaka jest transparentne
+        pygame.draw.circle(self.image,color,(radius,radius),radius) #na razie zwierze jest kropka, trzeba zaimportowac obrazek
+        self.rect=self.image.get_rect()
+        self.pos=np.array([x,y],dtype=np.float64)
+        self.speed=np.asarray(speed, dtype=np.float64)
+        self.width=width
+        self.height=height
+
+
+    def update(self): #przemieszczanie sie, na razie po dojściu do granicy pojawia się po drugiej stronie planszy
+        self.pos+=self.speed
+        x,y=self.pos
+        if x<0:
+            self.pos[0]=self.width
+            x=self.width
+        if x>self.width:
+            self.pos[0]=0
+            x=0
+        if y<0:
+            self.pos[1]=self.height
+            y=self.height
+        if y>self.height:
+            self.pos[1]=0
+            y=0
+        self.rect.x=x
+        self.rect.y=y
+
+
+pygame.init()
+#wstawiłam te dane, po to, żeby jakoś działało, to powinno być na głównym
+width=600
+height=600
+screen=pygame.display.set_mode([width,height])
+
+
+numanimals=pygame.sprite.Group() #tworzymy licznik dla klasy zwierząt
+for i in range(20):  #tu się pojawia 20 zwierzaków
+    x=np.random.randint(0,width+1)
+    y=np.random.randint(0,height+1)
+    speed=np.random.randint(2)*2-1
+    anim=Animal(x,y,width,height,color=red,speed=speed) #tu też trzeba zmienić na obrazek
+    numanimals.add(anim)
+    
+#tak samo, jak wyżej, wstawione po to, żeby jakoś działało
+T=500
+clock=pygame.time.Clock()
+for i in range(T):
+    for event in pygame.event.get():
+        if event.type==pygame.QUIT:
+            sys.exit()
+
+    numanimals.update()
+    screen.fill(window)
+    numanimals.draw(screen)
+    pygame.display.flip()
+    clock.tick(30)
+pygame.quit()
