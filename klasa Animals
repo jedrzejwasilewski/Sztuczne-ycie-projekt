@@ -1,0 +1,87 @@
+import random
+
+class Animals:
+    wspolrzedneX = ''
+    wspolrzedneY = ''
+
+    def __init__(self,wspolrzedneX,wspolrzedneY):
+        self.wspolrzedneX = wspolrzedneX
+        self.wspolrzedneY = wspolrzedneY
+        self.energia=100
+        print("Zwierzę ma obecnie 100 jednostek energii. Z każdym ruchem traci 1 jednostkę energi.")
+
+    def poruszanieX(self,ruchX):     #zwierzątko porusza się prawo/lewo
+        self.ruchX=random.randint(-10,10)        #losujemy liczbę kroków
+        if self.ruchX > 0:           #jeśli liczba jest większa od zera, zwierzę przesuwa się w prawo
+            self.wspolrzedneX += self.ruchX
+            if self.ruchX == 1:
+                print("Zwierzę przesunęło się o", self.ruchX, "krok w prawo.")
+            elif self.ruchX == 2 or self.ruchX == 3 or self.ruchX == 4:
+                print("Zwierzę przesunęło się o", self.ruchX, "kroki w prawo.")
+            else:
+                print("Zwierzę przesunęło się o", self.ruchX, "kroków w prawo.")
+            print("Jego obecne współrzędne to: ", self.wspolrzedneX,"&", self.wspolrzedneY,".")
+        elif self.ruchX < 0:          #jeśli liczba jest mniejsza od zera, zwierzę porusza się w lewo
+            self.ruchX = abs(self.ruchX)           #abs - zwraca wartość bezwzględną liczby (wtedy przy wyświetlanej liczbie kroków nie ma minusa, czyli tego, że zwierzę przesunęło się o -5 kroków w lewo)
+            self.wspolrzedneX -= abs(self.ruchX)
+            if self.ruchX == 1:
+                print("Zwierzę przesunęło się o", self.ruchX, "krok w lewo.")
+            elif self.ruchX == 2 or self.ruchX == 3 or self.ruchX == 4:
+                print("Zwierzę przesunęło się o", self.ruchX, "kroki w lewo.")
+            else:
+                print("Zwierzę przesunęło się o", self.ruchX, "kroków w lewo.")
+            print("Jego obecne współrzędne to: ", self.wspolrzedneX,"&", self.wspolrzedneY,".")
+
+    def poruszanieY(self,ruchY):         #zwierzątko porusza się góra/dół (wszystko analogicznie do prawo/lewo)
+        self.ruchY=random.randint(-10,10)
+        if self.ruchY > 0:
+            self.wspolrzedneY += self.ruchY
+            if self.ruchY == 1:
+                print("Zwierzę przesunęło się o", self.ruchY, "krok w dół.")
+            elif self.ruchY == 2 or self.ruchY == 3 or self.ruchY == 4:
+                print("Zwierzę przesunęło się o", self.ruchY, "kroki w dół.")
+            else:
+                print("Zwierzę przesunęło się o", self.ruchY, "kroków w dół.")
+            print("Jego obecne współrzędne to: ", self.wspolrzedneX,"&", self.wspolrzedneY,".")
+        elif self.ruchY < 0:
+            self.ruchY = abs(self.ruchY)
+            self.wspolrzedneY -= abs(self.ruchY)
+            if self.ruchY == 1:
+                print("Zwierzę przesunęło się o", self.ruchY, "krok w górę.")
+            elif self.ruchY == 2 or self.ruchY == 3 or self.ruchY == 4:
+               print("Zwierzę przesunęło się o", self.ruchY, "kroki w górę.")
+            else:
+                print("Zwierzę przesunęło się o", self.ruchY, "kroków w górę.")
+            print("Jego obecne współrzędne to: ", self.wspolrzedneX,"&", self.wspolrzedneY,".")
+
+    def utrata_energiiX(self): #utrata energii przy poruszaniu się prawo/lewo
+        self.energia-=self.ruchX
+        if self.ruchX==1:
+            print("Zwierzę straciło",self.ruchX,"jednostkę energii. Jego aktualny stan energi to:",self.energia)
+        elif self.ruchX==2 or self.ruchX==3 or self.ruchX==4:
+            print("Zwierzę straciło", self.ruchX, "jednostki energii. Jego aktualny stan energi to:", self.energia)
+        else:
+            print("Zwierzę straciło", self.ruchX, "jednostek energii. Jego aktualny stan energi to:", self.energia)
+
+    def utrata_energiiY(self):  #utrata energii przy poruszaniu się góra/dół
+        self.energia-=self.ruchY
+        if self.ruchY==1:
+            print("Zwierzę straciło",self.ruchY,"jednostkę energii. Jego aktualny stan energi to:",self.energia)
+        elif self.ruchY==2 or self.ruchY==3 or self.ruchY==4:
+            print("Zwierzę straciło", self.ruchY, "jednostki energii. Jego aktualny stan energi to:", self.energia)
+        else:
+            print("Zwierzę straciło", self.ruchY, "jednostek energii. Jego aktualny stan energi to:", self.energia)
+
+    def stan_energii(self):
+        return self.energia
+
+#dodałam przykład, żeby sprawdzić, czy wszystko działa
+cat=Animals(50,50)       #tutaj wpisujemy początkowe współrzędne zwierzaka
+print("Początkowe współrzędne to:", cat.wspolrzedneX,cat.wspolrzedneY,".")
+while cat.stan_energii()>0:
+    cat.poruszanieX(cat.wspolrzedneX)
+    cat.utrata_energiiX()
+    cat.poruszanieY(cat.wspolrzedneY)
+    cat.utrata_energiiY()
+if cat.stan_energii()<=0:
+    print("Zwierzę straciło całą energię.")
